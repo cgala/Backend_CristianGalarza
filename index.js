@@ -3,6 +3,10 @@ import dotenv from "dotenv";
 import conectarDB from "./config/db.js";
 import veterinarioRoutes from "./routes/veterinarioRoutes.js"
 const app = express();
+
+//para recibir jsons como request
+app.use(express.json());
+
 dotenv.config();
 
 conectarDB();

@@ -4,7 +4,7 @@ const router = express.Router();
 
 
 // '/' HACE REFERENCIA A api/veterinarios
-router.get('/', registrar);
+router.post('/', registrar);
 
 router.get('/perfil', perfil);
 

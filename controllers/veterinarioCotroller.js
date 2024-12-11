@@ -1,9 +1,13 @@
+import { request } from "express";
+
 const registrar = (req, res) => {
-    res.send("Desde API/VETERINARIOS")
+
+    console.log(req.body);
+    res.json({msj: "registrando usuario.."});
 };
 
 const perfil = (req, res) => {
-    res.send("Desde API/VETERINARIOS/perfil")
+    res.json({msj: "Mostrando Perfil"})
 }
 
 export {
