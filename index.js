@@ -7,8 +7,9 @@ dotenv.config();
 
 conectarDB();
 
-// al hacer una peticion a "/api/veterinarios", se conecta al archivo  veterinarioRouters.js
-app.use("/api/veterinarios",veterinarioRouters );
+// al hacer una peticion a "/api/veterinarios", se conecta al archivo  veterinarioRouters.js 
+//y ejecuta los metodos http de rest definidos
+app.use("/api/veterinarios",veterinarioRoutes );
 
 // SI NO EXITE CONECTAR AL PUERTO 4000
 const PORT = process.env.PORT || 4000
