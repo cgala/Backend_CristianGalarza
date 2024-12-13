@@ -7,7 +7,7 @@ const registrar = async (req, res) => {
     const { email } = req.body
 
     // prevenir  usuarios duplicados
-    //finOne busca por registro  en la bd
+    //finOne busca por registro  en la bd en el campo email, el email recibido por req
     const existeUsuario = await Veterinario.findOne({email:email});
 
     if (existeUsuario){
