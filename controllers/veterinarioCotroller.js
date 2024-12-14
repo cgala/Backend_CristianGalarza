@@ -31,7 +31,36 @@ const perfil = (req, res) => {
     res.json({msj: "Mostrando Perfil"})
 }
 
+const confirmar = async(req, res) => {
+    //params => url y req => body
+    const { token } = req.params;
+    const usuarioConfirmar = await Veterinario.findOne({token: token});
+    
+    if (!usuarioConfirmar){
+        const error= new Error("Token no valido");
+        return res.status(400).json({msj: error.message});
+    }
+
+    //al existir el usuario, tengo que pisar el token por seguridad, cambiar el 
+    // estado a true, eso impacta en la base y tenemos el objeto usuario "como logeado"
+    try {
+        usuarioConfirmar.token = null;
+        usuarioConfirmar.confirmado = true;
+
+        await usuarioConfirmar.save();
+
+        res.json({msg: "Usuario confirmado correctamente"});
+       
+    } catch (error){
+        console.log(error);
+
+    }
+
+    
+}
+
 export {
     registrar,
-    perfil
+    perfil,
+    confirmar
 }
