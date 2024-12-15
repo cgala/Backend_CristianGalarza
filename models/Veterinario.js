@@ -50,6 +50,13 @@ VeterinarioSchema.pre('save', async function(next) {
    this.password = await bcrypt.hash(this.password, salt);
 });
 
+//funcion para comprobar password, con methods registramos funciones en el modelo
+VeterinarioSchema.methods.comprobarPassword = async function (passwordFormulario
+
+) {
+    return await bcrypt.compare(passwordFormulario, this.password);
+};
+
 const Veterinario = mongoose.model("Veterinario", VeterinarioSchema);
 export default Veterinario;
 //trim elimina espacios al inicio y final
