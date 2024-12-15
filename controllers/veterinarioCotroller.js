@@ -123,7 +123,31 @@ const comprobarToken = async (req, res) => {
 };
 
 
-const nuevoPassword = (req, res) => {};
+const nuevoPassword = async (req, res) => {
+    const { token } = req.params; //lo que viene por url
+    const { password } = req.body; //lo que el usuario escribe en el body
+
+    const veterinario = await Veterinario.findOne({ token });
+
+    if (!veterinario){
+        const error = new Error("Hubo un error");
+        return res.status(400).json({msj: error.message})
+    }
+
+    try {
+        veterinario.token = null;
+        veterinario.password = password;
+        await veterinario.save(); // al haber un .save que afecta a la pass, se ejecuta el middleware definido en el modelo para saber si hay modificacion de pass
+        res.json({msj: "Password modificado correctamente"});
+
+        //se elimina el token por seguridad
+        // al hacer .save se ejecuta el midlleware pre y vuelve a hashear el pass del objeto antes de guardar
+
+    } catch(error){
+        console.log(error);
+    }
+
+};
 
 export {
     registrar,
