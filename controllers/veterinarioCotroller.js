@@ -29,7 +29,10 @@ const registrar = async (req, res) => {
 };
 
 const perfil = (req, res) => {
-    res.json({msj: "Mostrando Perfil"})
+    // el middleware de auth guardo la sesion del usuario u objeto usuario
+    const { veterinario } = req;
+
+    res.json({perfil: veterinario})
 }
 
 const confirmar = async(req, res) => {
