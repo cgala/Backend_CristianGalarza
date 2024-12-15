@@ -88,9 +88,16 @@ const autenticar = async  (req, res) => {
     }
 };
 
+const olvidePasword = (req, res) => {};
+const comprobarToken = (req, res) => {};
+const nuevoPassword = (req, res) => {};
+
 export {
     registrar,
     perfil,
     confirmar,
-    autenticar
+    autenticar,
+    olvidePasword,
+    comprobarToken,
+    nuevoPassword
 }
