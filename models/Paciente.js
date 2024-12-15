@@ -13,11 +13,12 @@ const pacienteSchema = mongoose.Schema({
         type: String,
         require: true,
     },
-    nombre:{
-        type: String,
+    fecha:{
+        type: Date,
         require: true,
+        default: Date.now(),
     },
-    nombre:{
+    sintomas:{
         type: String,
         require: true,
     },
