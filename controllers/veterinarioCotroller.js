@@ -2,11 +2,12 @@ import { request } from "express";
 import Veterinario from "../models/Veterinario.js";
 import generarJWT from "../helpers/generarJWT.js";
 import generarId from "../helpers/generarId.js";
+import emailRegistro from "../helpers/emailRegistro.js";
 
 const registrar = async (req, res) => {
     //descontruction de req.body
     //const {nombre, email, password} = req.body;
-    const { email } = req.body
+    const { email, nombre } = req.body
 
     // prevenir  usuarios duplicados
     //finOne busca por registro  en la bd en el campo email, el email recibido por req
@@ -21,6 +22,15 @@ const registrar = async (req, res) => {
         //guardar un nuevo Veterinario
         const veterinario = new Veterinario(req.body);
         const veterinarioGuardado = await veterinario.save();
+
+        //ENVIAR MAIL
+        emailRegistro({
+            email,
+            nombre,
+            token: veterinarioGuardado.token
+        });
+
+
 
         res.json(veterinarioGuardado);
     }catch (error){
