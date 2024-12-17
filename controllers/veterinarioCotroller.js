@@ -43,7 +43,7 @@ const confirmar = async(req, res) => {
     
     if (!usuarioConfirmar){
         const error= new Error("Token no valido");
-        return res.status(400).json({msj: error.message});
+        return res.status(400).json({msg: error.message});
     }
 
     //al existir el usuario, tengo que pisar el token por seguridad, cambiar el 
@@ -85,7 +85,7 @@ const autenticar = async  (req, res) => {
         res.json({token: generarJWT(usuario.id)});
     } else {
         const error = new Error("El password es incorrecto");
-        return res.status(403).json({msj: error.message});
+        return res.status(403).json({msg: error.message});
     }
 };
 
@@ -95,13 +95,13 @@ const olvidePasword = async (req, res) => {
     const existeVeterinario = await Veterinario.findOne({email});
     if (!existeVeterinario){
         const error = new Error('el usuario no existe');
-        return res.status(400).json({msj: error.message});
+        return res.status(400).json({msg: error.message});
     }
 
     try {
         existeVeterinario.token = generarId();
         await existeVeterinario.save();
-        res.json({msj: "Se envio un mail con las instrucciones"});
+        res.json({msg: "Se envio un mail con las instrucciones"});
 
     } catch (error) {
         console.log(error);
@@ -118,7 +118,7 @@ const comprobarToken = async (req, res) => {
         res.json({msg: "Token valido y el usuario existe"});
     } else {
         const error = new Error("Token no valido");
-        return req.status(400).json({msj: error.message});
+        return req.status(400).json({msg: error.message});
     }
 };
 
@@ -131,14 +131,14 @@ const nuevoPassword = async (req, res) => {
 
     if (!veterinario){
         const error = new Error("Hubo un error");
-        return res.status(400).json({msj: error.message})
+        return res.status(400).json({msg: error.message})
     }
 
     try {
         veterinario.token = null;
         veterinario.password = password;
         await veterinario.save(); // al haber un .save que afecta a la pass, se ejecuta el middleware definido en el modelo para saber si hay modificacion de pass
-        res.json({msj: "Password modificado correctamente"});
+        res.json({msg: "Password modificado correctamente"});
 
         //se elimina el token por seguridad
         // al hacer .save se ejecuta el midlleware pre y vuelve a hashear el pass del objeto antes de guardar

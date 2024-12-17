@@ -27,12 +27,12 @@ const obtenerPaciente = async (req, res) => {
     const paciente = await Paciente.findById(id);
     
     if(!paciente){
-        return res.status(404).json({msj: 'No encontrado'});
+        return res.status(404).json({msg: 'No encontrado'});
     }
 
     //validamos que el id del veterinario en el objeto paciente obtenido, seal emismo que el de la sesion
     if (paciente.veterinario._id.toString() !== req.veterinario._id.toString()){
-        return res.json({msj: "accion no permitida"});
+        return res.json({msg: "accion no permitida"});
     }
     if (paciente) {
         res.json(paciente);
@@ -45,12 +45,12 @@ const actualizarPaciente = async (req, res) =>{
     const paciente = await Paciente.findById(id);
     
     if(!paciente){
-        return res.status(404).json({msj: 'No encontrado'});
+        return res.status(404).json({msg: 'No encontrado'});
     }
 
     //validamos que el id del veterinario en el objeto paciente obtenido, seal emismo que el de la sesion
     if (paciente.veterinario._id.toString() !== req.veterinario._id.toString()){
-        return res.json({msj: "accion no permitida"});
+        return res.json({msg: "accion no permitida"});
     }
 
     // actualizar paciente
@@ -75,17 +75,17 @@ const eliminarPaciente = async (req, res) =>{
     const paciente = await Paciente.findById(id);
     
     if(!paciente){
-        return res.status(404).json({msj: 'No encontrado'});
+        return res.status(404).json({msg: 'No encontrado'});
     }
 
     //validamos que el id del veterinario en el objeto paciente obtenido, seal emismo que el de la sesion
     if (paciente.veterinario._id.toString() !== req.veterinario._id.toString()){
-        return res.json({msj: "accion no permitida"});
+        return res.json({msg: "accion no permitida"});
     }
 
     try {
         await paciente.deleteOne();
-        res.json({msj: "Paciente Eliminado"});
+        res.json({msg: "Paciente Eliminado"});
     } catch (error){
         console.log(error);
     }
