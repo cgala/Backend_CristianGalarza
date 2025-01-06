@@ -14,7 +14,7 @@ dotenv.config();
 
 conectarDB();
 
-const dominiosPermitidos = ["http://localhost:5173"];
+const dominiosPermitidos = [process.env.FRONTEND_URL];
 
 {/*origin: Representa el dominio de origen desde donde se hizo la petición.
     callback: Es una función que debes ejecutar para indicar si permites o deniegas el acceso. */}
