@@ -44,7 +44,7 @@ const perfil = (req, res) => {
     // el middleware de auth guardo la sesion del usuario u objeto usuario
     const { veterinario } = req;
 
-    res.json({perfil: veterinario})
+    res.json(veterinario)
 }
 
 const confirmar = async(req, res) => {
@@ -138,7 +138,7 @@ const comprobarToken = async (req, res) => {
         res.json({msg: "Token valido y el usuario existe"});
     } else {
         const error = new Error("Token no valido");
-        return req.status(400).json({msg: error.message});
+        return res.status(400).json({msg: error.message});
     }
 };
 
