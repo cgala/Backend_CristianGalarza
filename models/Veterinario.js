@@ -1,62 +1,56 @@
 import mongoose from "mongoose";
 import bcrypt from "bcrypt";
-import generarId from '../helpers/generarId.js'
+import generarId from '../helpers/generarId.js';
 
-const VeterinarioSchema = mongoose.Schema({
-    nombre:{
-        type:String,
-        require:true,
-        trim:true
+const veterinarioSchema = new mongoose.Schema({ // <-- Aquí estaba bien en minúsculas
+    nombre: {
+      type: String,
+      required: true,
+      trim: true,
     },
-    password:{
-        type:String,
-        require:true,
+    password: {
+      type: String,
+      required: true,
     },
-    email:{
-        type:String,
-        require:true,
-        unique:true,
-        trim:true,
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+      trim: true,
     },
-    telefono:{
-        type:String,
-        default:null,
-        trim:true,
+    telefono: {
+      type: String,
+      default: null,
+      trim: true,
     },
-    web:{
-        type:String,
-        default:null,
+    web: {
+      type: String,
+      default: null,
     },
     token: {
-        type:String,
-        default: generarId(),
+      type: String,
+      default: generarId(),
     },
-    confirmado:{
-        type:Boolean,
-        default:false,
+    confirmado: {
+      type: Boolean,
+      default: false,
     },
 });
 
-//usando middleware en mongoose, antes y despues de una accion a la base
-// el next es para que mongoose valla al siguiente middleware, es como
-// un pass o desestimacion
-// uso funcion y no arrow porque con funcion manejo directamente el objero con this
-VeterinarioSchema.pre('save', async function(next) {
-    // para que a un pass ya hasheado no lo vuelva a hashear
-    if(!this.isModified ("password")){
-        next();
+// Middleware para hashear la contraseña antes de guardar
+veterinarioSchema.pre('save', async function (next) { // <-- Cambio aquí
+    if (!this.isModified("password")) {
+        return next();
     }
-   const salt = await bcrypt.genSalt(10);
-   this.password = await bcrypt.hash(this.password, salt);
+    const salt = await bcrypt.genSalt(10);
+    this.password = await bcrypt.hash(this.password, salt);
+    next();
 });
 
-//funcion para comprobar password, con methods registramos funciones en el modelo
-VeterinarioSchema.methods.comprobarPassword = async function (passwordFormulario
-
-) {
+// Función para comprobar password
+veterinarioSchema.methods.comprobarPassword = async function (passwordFormulario) { // <-- Cambio aquí
     return await bcrypt.compare(passwordFormulario, this.password);
 };
 
-const Veterinario = mongoose.model("Veterinario", VeterinarioSchema);
+const Veterinario = mongoose.model("Veterinario", veterinarioSchema); // <-- Cambio aquí
 export default Veterinario;
-//trim elimina espacios al inicio y final
