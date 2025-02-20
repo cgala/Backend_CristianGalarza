@@ -174,6 +174,17 @@ const nuevoPassword = async (req, res) => {
 
 };
 
+//NUEVA FUNCIÓN: Obtener total de veterinarios
+const totalVeterinarios = async (req, res) => {
+    try {
+        const total = await Veterinario.countDocuments(); // Cuenta los documentos en la BD
+        res.json({ total }); // Devuelve el total en JSON
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ msg: "Error en el servidor" });
+    }
+};
+
 export {
     registrar,
     perfil,
@@ -181,5 +192,6 @@ export {
     autenticar,
     olvidePasword,
     comprobarToken,
-    nuevoPassword
+    nuevoPassword,
+    totalVeterinarios 
 }
